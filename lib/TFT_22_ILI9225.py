@@ -151,12 +151,7 @@ class TFT_22_ILI9225():
     # specific to each board type (e.g. 11,13 for Uno, 51,52 for Mega, etc.)
     # Adds backlight brightness 0-255
     def __init__(self, spi: SPI, cs: Pin|DigitalInOut, dc: Pin|DigitalInOut, rst: Pin|DigitalInOut, width: int=ILI9225_LCD_WIDTH, height: int=ILI9225_LCD_HEIGHT, rotation: int=0, led: int=255):
-
-        _spi  = spi
         self.spi = spi
-        _cs   = cs
-        _dc   = dc
-        _rst  = rst
         self.width = width
         self._maxX = width
         self.height = height
@@ -172,11 +167,11 @@ class TFT_22_ILI9225():
             raise RuntimeError('Rotation must be 0, 90, 180 or 270.')
         else:
             self.rotation = self.ROTATE[rotation]
-    ## Set up reset pin
+        ## Set up reset pin
         self.rst = convert_pin(rst)
         self.rst.direction = Direction.OUTPUT
         self.rst.value = False
-    ## Control pins
+        ## Control pins
         self.dc = convert_pin(dc)
         self.dc.direction = Direction.OUTPUT
         self.dc.value = False
@@ -185,15 +180,13 @@ class TFT_22_ILI9225():
         self.cs.direction = Direction.OUTPUT
         self.cs.value = True
 
-    ## Initialization Code
+        ## Initialization Code
         self.reset()                # reset ILI9225
         self.setup()
 
-    ## Turn on backlight
-#        self.setBacklight(True)
         self.setOrientation(0)
 
-    ## Initialize variables
+        ## Initialize variables
         self.clear()
         
     ## Start Initial sequence        
@@ -246,13 +239,13 @@ class TFT_22_ILI9225():
 
 
     def reset(self):
-        #self.rst.on()         ## Pull the reset pin high to release the ILI9225C from the reset status
+        ## Pull the reset pin high to release the ILI9225C from the reset status
         self.rst.value = True
         time.sleep(0.001)
-        #self.rst.off()        ## Pull the reset pin low to reset ILI9225
+        ## Pull the reset pin low to reset ILI9225
         self.rst.value = False
         time.sleep(0.010)
-        #self.rst.on()         ## Pull the reset pin high to release the ILI9225C from the reset status
+        ## Pull the reset pin high to release the ILI9225C from the reset status
         self.rst.value = True
         time.sleep(0.050)
 
